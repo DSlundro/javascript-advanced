@@ -1,0 +1,111 @@
+# Spread Operator
+```js
+// spread operator add all elements of one ore more arrays in one new array
+const arr1 = [3, 4, 5];
+const arr2 = [6, 7, 8];
+const newArr = [1, 2, ...arr1];
+console.log(newArr);
+// => (5) [1, 2, 3, 4, 5]
+
+// Copy array
+const arr1Copy = [...arr1];
+console.log(arr1Copy);
+// => (3) [3, 4, 5]
+
+// Join 2 arrays
+const arrays = [...arr1, ...arr2];
+console.log(arrays);
+// => (6) [3, 4, 5, 6, 7, 8]
+
+```
+
+### Methods with spread operator
+```js
+const restaurant = {
+    name: 'Classico Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Carpese Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    orderPizza: function(ing1, ing2, ing3){
+        console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`);
+    }
+};
+
+const ingredients = ['mushrooms','mozzarella', 'tomato',]
+restaurant.orderPizza(...ingredients)
+// Here is your delicious pasta with mushrooms, mozzarella, tomato
+
+```
+
+### Objects
+```js
+const restaurant = {
+    name: 'Classico Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Carpese Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    orderPizza: function(ing1, ing2, ing3){
+        console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`);
+    }
+};
+
+// Add the objects with the new properties in a new object
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Giuseppe' };
+console.log(newRestaurant);
+// => categories: (4) ['Italian', 'Pizzeria', 'Vegetarian', 'Organic']
+//    foundedIn: 1998
+//    founder: "Giuseppe"
+//    location: "Via Angelo Tavanti 23, Firenze, Italy"
+// => mainMenu: (3) ['Pizza', 'Pasta', 'Risotto']
+//    name: "Classico Italiano"
+// => orderPasta: ƒ (ing1,ing2,ing3)
+// => starterMenu: (4) ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Carpese Salad']
+
+
+// Copy
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy);
+// => categories: (4) ['Italian', 'Pizzeria', 'Vegetarian', 'Organic']
+//    foundedIn: 1998
+//    founder: "Giuseppe"
+//    location: "Via Angelo Tavanti 23, Firenze, Italy"
+// => mainMenu: (3) ['Pizza', 'Pasta', 'Risotto']
+//    name: "Ristorante Roma"
+// => orderPasta: ƒ (ing1,ing2,ing3)
+// => starterMenu: (4) ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Carpese Salad']
+```
+
+### Rest Pattern
+```js
+// Asign some values as variables and all other in one separated
+
+// Arrays
+const arr = [1, 2, 3, 4, 5]
+const [a, b, ...others] = arr
+console.log(a, b, others);
+// 1 2 => (3) [3, 4, 5]
+
+// Objects
+const { sat, ...weekdays } = restaurant.openingHours
+console.log(sat);
+// {open: 0, close: 24}
+console.log(weekdays);
+// => {thu: {…}, fri: {…}}
+//      fri: {open: 11, close: 23}
+//      thu: {open: 12, close: 22}
+
+// Functions
+const add = (...numbers) => console.log(numbers);
+add(2, 3);
+add(5, 3, 7, 2);
+add(4, 6, 5, 2, 5, 8)
+// => (2) [2, 3]
+// => (4) [5, 3, 7, 2]
+// => (6) [4, 6, 5, 2, 5, 8]
+```
+
+
+
