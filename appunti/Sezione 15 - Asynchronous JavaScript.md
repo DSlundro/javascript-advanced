@@ -330,9 +330,27 @@ get3Countries('portugal', 'serbia', 'italy')
 ```
 
 ## Promise.allSettled
+### Returns a promise that fulfills after all of the given promises have either fulfilled or rejected
 ```js
-
+Promise.allSettled([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res))
+.catch(err => console.error(err))
 ```
 
+## Promise.any
+### Returns a single promise that fulfills as soon as any of the promises in the iterable fulfills, with the value of the fulfilled promise
+```js
+Promise.any([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res))
+.catch(err => console.error(err))
+```
 
 
