@@ -1,19 +1,36 @@
 'use strict';
 
 
+// Promise.allSettled
 
-const getPosition = function() {
-    return new Promise(function(resolve, reject) {
-        /* navigator.geolocation.getCurrentPosition(
-            position => resolve(position),
-            err => reject(err)
-        ) */
-
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-    })
-}
-
+/* (async function () {
+    const res = await Promise.allSettled([
+        getJSON(`https://restcountries.com/v2/name/italy`),
+        getJSON(`https://restcountries.com/v2/name/serbia`),
+        getJSON(`https://restcountries.com/v2/name/spain`)
+    ])
+    console.log(res[0]);
+})() */
 
 
 
-getPosition().then(pos => console.log(pos)).catch(err => console.log(err))
+Promise.allSettled([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res))
+.catch(err => console.error(err))
+
+
+
+// Promise.any will retur nthe first fullfilled promise
+
+Promise.any([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res))
+.catch(err => console.error(err))
+

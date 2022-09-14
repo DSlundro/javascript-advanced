@@ -198,5 +198,141 @@ Promise.reject(new Error('Problem!')).catch(x => console.error(x))
 */
 ```
 
+## Async/Await
+```js
+const renderCountry = function(data){
+    console.log(`
+    ${data.name}
+    ${data.region}
+    ${+(data.population / 1000000).toFixed(1)} Mln
+    ${data.languages[0].name}
+    ${data.currencies[0].name}
+    `);
+}
+
+
+// Async - the function returns as a promise
+const whereAmI = async function(country){
+    // Await - await until the promise settles and returns the response
+    const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+    const data = await res.json()
+    renderCountry(data[0])
+}
+
+whereAmI('italia');
+
+/* 
+    Italy
+    Europe
+    59.6 Mln
+    Italian
+    Euro
+*/
+```
+
+## Try/Catch
+```js
+try {
+    let y = 1;
+    const x = 2;
+    x = 3
+} catch (error) {
+    console.log(error.message);
+} 
+
+// Assignment to constant variable.
+```
+
+## Return values from Async functions
+```js
+// Async - the function returns as a promise
+const whereAmI = async function(country){
+    // Await - await until the promise settles and returns the response
+    const res = await fetch(`https://restcountries.com/v2/name/${country}`);
+    const data = await res.json()
+    renderCountry(data[0]);
+
+    return `You are in ${data[0].capital}, ${data[0].name}`
+}
+
+whereAmI('italia').then(log => console.log(log))
+// You are in Rome, Italy
+```
+
+## Transform function in Try/Catch
+```js
+console.log('1: Will get location');
+whereAmI('italia')
+.then(city => console.log(`2: ${city}`))
+.catch(err => console.log(`2: ${err.message}`))
+.finally(() => console.log(`3: Finished getting location`))
+
+/* 
+    1: Will get location
+    2: You are in Rome, Italy
+    3: Finished getting location
+*/
+
+
+(async function whereAmI(){
+    console.log('1: Will get location');
+    try {
+        const city = await whereAmI()
+        console.log(`2: ${city}`);
+    } catch (error) {
+        console.error(`2: ${err.message}`)
+    }
+    console.log(`3: Finished getting location`)
+})();
+
+/* 
+    1: Will get location
+    2: You are in Rome, Italy
+    3: Finished getting location
+*/
+```
+
+## Running Promises in parallel
+```js
+const get3Countries = async function(c1, c2, c3){
+    try {
+
+        // Running Promises in Parallel
+        // If one is rejected all will be rejected
+        const data = await Promise.all([
+            getJSON(`https://restcountries.com/v2/name/${c1}`),
+            getJSON(`https://restcountries.com/v2/name/${c2}`),
+            getJSON(`https://restcountries.com/v2/name/${c3}`),
+        ])
+
+        console.log(data.map(d => d[0].capital));
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+get3Countries('portugal', 'serbia', 'italy')
+// (3) ['Lisbon', 'Belgrade', 'Rome']
+```
+
+## Promise.race
+```js
+// Promise.race returns the fastest promise (doesn't matter if rejected)
+(async function (){
+    const res = await Promise.race([
+        getJSON(`https://restcountries.com/v2/name/italy`),
+        getJSON(`https://restcountries.com/v2/name/serbia`),
+        getJSON(`https://restcountries.com/v2/name/spain`)
+    ])
+    console.log(res[0]);
+})()
+```
+
+## Promise.allSettled
+```js
+
+```
+
 
 
